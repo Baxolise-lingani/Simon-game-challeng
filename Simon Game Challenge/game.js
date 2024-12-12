@@ -24,12 +24,36 @@ $(".btn").click(function () {
     playSound(userChosenColour);
 
     animatePress(userChosenColour);
+
+    checkAnswer (userclickedPattern.length-1);
 });
 
+function checkAnswer(currentLevel) {
 
+    if (gamePattern[currentLevel] === userclickedPattern[currentLevel]) {
+
+        console.log("success");
+
+        if (userclickedPattern.length === gamePattern.length) {
+            setTimeout(function () {
+                nextSequence();
+            }, 1000);
+        }
+    } else {
+        console.log("wrong");
+
+        playSound("wrong");
+        $("body").addClass("game-over");
+        setTimeout(function () {
+            $("body").removeClass("game-over");
+        }, 200);
+        $("#level-title").text("Game over, Press Any Key to restart");
+    }
+}
 
 
 function nextSequence() {
+    userclickedPattern = [];
 
     level++;
 
